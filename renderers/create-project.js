@@ -4,7 +4,8 @@ let $ = require('jquery')
 const {remote, ipcRenderer} = require('electron')
 const { alertError } = require('../commons/utils.js')
 
-let workingDirectory =  ["/Users/yeon/Downloads/bwh", "/Users/yeon/Downloads/modify_bwh_w"]
+//let workingDirectory =  ["/Users/yeon/Downloads/bwh", "/Users/yeon/Downloads/modify_bwh_w"]
+let workingDirectory =  ["/Users/hansangmee/Desktop/AnnottiTestData", "/Users/hansangmee/Desktop/AnnottiTestData"]
 
 // Click select directory button
 $('#select-dir').on('click', () => {
@@ -25,6 +26,7 @@ $('#create-project').on('click', () => {
   else{
     ipcRenderer.sendSync('setProjectManager', taskId)
     remote.getGlobal('projectManager').setWorkingDirectory(workingDirectory)
-    remote.getCurrentWindow().loadURL(`file://${__dirname}/../templates/default.html`)
+    if(taskId == 0) remote.getCurrentWindow().loadURL(`file://${__dirname}/../templates/default.html`)
+    else remote.getCurrentWindow().loadURL(`file://${__dirname}/../templates/tab-default.html`)
   }
 }) 

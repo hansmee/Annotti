@@ -14,7 +14,7 @@ var tabTitle = "";
                             <img src='../resources/imgs/remove_tab.png' style='width:10px; height:10px;'>\
                         </span>\
                     </li>",
-    tabCounter = 2;
+    tabCounter = 1;
 
 var tabContent = "<div class='working-menu'>\
                     <div class='tab-image' id='tab-image-area'></div>\
@@ -35,8 +35,16 @@ var tabContent = "<div class='working-menu'>\
                     <button id='add-label' class ='add-label'>Add Label</button>\
                 </div>";
 
+var tabs = $( "#tab-area" ).tabs();
 
-
+tabs.tabs({
+    active: 1
+});
+// Getter
+var activeIndex = tabs.tabs( "option", "active" );
+ 
+// Setter
+//$( ".selector" ).tabs( "option", "active", 1 );
 
 
 function openTab(thumbnailId){
@@ -44,12 +52,7 @@ function openTab(thumbnailId){
     tabTitle = "" + thumbnailId;
 
     $("#all-imgs").css("display", "none");
-    $("#tab-area").css("display", "block");
-
-
-
-    var tabs = $( "#tab-area" ).tabs();
-    var tabList = $('#tab-list');
+    $("#tab-area").css("display", "flex");
 
     var title = tabTitle || "Tab " + tabCounter,
         id = "tabs-" + thumbnailId,
@@ -57,11 +60,17 @@ function openTab(thumbnailId){
         tabContentHtml = tabContent || "Tab " + tabCounter + " content.";
     
     
-    tabs.find("#tab-list").append(li);
-    //tabs.find( ".ui-tabs-nav" ).append( li );
+    //tabs.find("#tab-list").append(li);
+    tabs.find( ".ui-tabs-nav" ).append( li );
     tabs.append( "<div class='tab-menu' id='" + id + "'>" + tabContentHtml + "</div>" );
-    tabs.tabs( "refresh" );
+    
     tabCounter++;
+
+    
+    $('#tab-area').tabs("option", "selected", thumbnailId);
+    
+    console.log($('#tab-area').tabs("option", "selected"));
+    tabs.tabs( "refresh" );
 
     // Close icon: removing the tab on click
     tabs.on( "click", "span.ui-icon-close", function() {
@@ -69,8 +78,6 @@ function openTab(thumbnailId){
         $( "#" + panelId ).remove();
         tabs.tabs( "refresh" );
     });
-
-
 
 
 }
